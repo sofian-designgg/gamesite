@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sayuri-pink: #ffb7c5;
+  --sayuri-rose: #ffc0cb;
+  --sayuri-bg: #fff0f5;
+}
+
+body {
+  background: var(--sayuri-bg);
+}
+
+/* Background manga */
+.bg-manga {
+  background-image: url('/background.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+@media (max-width: 768px) {
+  .bg-manga {
+    background-attachment: scroll;
+  }
+}
+
+/* Overlay pour lisibilité */
+.bg-manga-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 240, 245, 0.92) 0%,
+    rgba(255, 228, 235, 0.88) 50%,
+    rgba(255, 182, 193, 0.85) 100%
+  );
+}
+
+/* Roue */
+.wheel-container {
+  transform-origin: center center;
+}

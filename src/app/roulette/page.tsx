@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { ClientHeader } from '@/components/ClientHeader';
@@ -8,11 +8,24 @@ import { RouletteGame } from '@/components/RouletteGame';
 
 export default function RoulettePage() {
   const { data: session, status } = useSession();
+  const [sayucoins, setSayucoins] = useState<number | null>(null);
   const [mounted, setMounted] = useState(false);
+
+  const fetchUser = useCallback(() => {
+    if (!session?.user?.id) return;
+    fetch('/api/user')
+      .then((r) => r.json())
+      .then((u) => setSayucoins(u.sayucoins ?? 0))
+      .catch(() => setSayucoins(0));
+  }, [session?.user?.id]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (session?.user?.id) fetchUser();
+  }, [session?.user?.id, fetchUser]);
 
   if (!mounted || status === 'loading') {
     return (
